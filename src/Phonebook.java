@@ -3,8 +3,10 @@
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+
 
 
 
@@ -84,7 +86,18 @@ public class Phonebook {
         return SearchElementForName(valueStr,pref);
     }
       
-    public Set<Map.Entry<String,ArrayList<String>>> All(){
-        return book.entrySet();
+    public LinkedHashMap<String,ArrayList<String>> All(){
+        LinkedHashMap<String,ArrayList<String>> sortingHashMap = new LinkedHashMap<>();
+        Set<String> setNames =this.book.keySet();
+        int bufMaxCountNumbers = this.maxCountPhoneNumbers;
+        while(bufMaxCountNumbers >= 0){
+            for (String name : setNames){
+                if (this.book.get(name).size() == bufMaxCountNumbers){
+                    sortingHashMap.put(name, this.book.get(name));
+                }
+            }
+            bufMaxCountNumbers--;
+        }
+        return sortingHashMap;
     }     
 }
